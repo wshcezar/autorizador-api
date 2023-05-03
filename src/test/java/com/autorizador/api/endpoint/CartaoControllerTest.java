@@ -41,7 +41,7 @@ public class CartaoControllerTest {
     }
 
     @Test
-    public void deveRetornarCreated_quandoCadastrarOCartao() throws Exception {
+    public void deveRetornarCreatedQuandoCadastrarOCartao() throws Exception {
 
         CartaoRequest request = CartaoRequest.builder().numeroCartao("123456789").senha("123").build();
         CartaoResponse response = CartaoResponse.builder().numeroCartao("123456789").senha("123").build();
@@ -63,7 +63,7 @@ public class CartaoControllerTest {
     }
 
     @Test
-    public void deveRetornarBadRequest_quandoCadastrarOCartaoSemONumero() throws Exception {
+    public void deveRetornarBadRequestQuandoCadastrarOCartaoSemONumero() throws Exception {
 
         CartaoRequest request = CartaoRequest.builder().numeroCartao(null).senha("123").build();
 
@@ -75,7 +75,7 @@ public class CartaoControllerTest {
     }
 
     @Test
-    public void deveRetornarBadRequest_quandoCadastrarOCartaoSemASenha() throws Exception {
+    public void deveRetornarBadRequestQuandoCadastrarOCartaoSemASenha() throws Exception {
 
         CartaoRequest request = CartaoRequest.builder().numeroCartao(null).senha("123").build();
 
