@@ -41,7 +41,7 @@ public class CartaoControllerTest {
     }
 
     @Test
-    public void shouldReturnSuccess_whenCreateCartao() throws Exception {
+    public void deveRetornarCreated_quandoCadastrarOCartao() throws Exception {
 
         CartaoRequest request = CartaoRequest.builder().numeroCartao("123456789").senha("123").build();
         CartaoResponse response = CartaoResponse.builder().numeroCartao("123456789").senha("123").build();
@@ -60,5 +60,29 @@ public class CartaoControllerTest {
                 .andReturn();
 
         verify(service).create(request);
+    }
+
+    @Test
+    public void deveRetornarBadRequest_quandoCadastrarOCartaoSemONumero() throws Exception {
+
+        CartaoRequest request = CartaoRequest.builder().numeroCartao(null).senha("123").build();
+
+        mockMvc.perform(post(ENDPOINT)
+                        .content(objectMapper.writeValueAsString(request))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isBadRequest())
+                .andReturn();
+    }
+
+    @Test
+    public void deveRetornarBadRequest_quandoCadastrarOCartaoSemASenha() throws Exception {
+
+        CartaoRequest request = CartaoRequest.builder().numeroCartao(null).senha("123").build();
+
+        mockMvc.perform(post(ENDPOINT)
+                        .content(objectMapper.writeValueAsString(request))
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isBadRequest())
+                .andReturn();
     }
 }
