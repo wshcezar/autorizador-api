@@ -8,7 +8,6 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,12 +22,12 @@ public interface CartaoEndpoint {
     @ApiOperation(value = "Criando um Cartao", response = CartaoResponse.class)
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Criando um cartao com sucesso"),
-            @ApiResponse(code = 400, message = "Cartao com dados invalidos"),
+            @ApiResponse(code = 422, message = "Cartao com dados invalidos"),
             @ApiResponse(code = 500, message = "Cartao com erro de servidor")
     })
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
-    ResponseEntity<CartaoResponse> create(
+    CartaoResponse create(
             @ApiParam(value = "Payload do Cartao", required = true)
             @Valid @RequestBody final CartaoRequest request);
 }
