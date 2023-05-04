@@ -9,8 +9,6 @@ public class ValidationException extends RuntimeException {
 
     private String messageCustom;
 
-    public ValidationException(String message) { super(message); }
-
     public ValidationException(String message, String messageCustom) {
         super(message);
         this.messageCustom = messageCustom;

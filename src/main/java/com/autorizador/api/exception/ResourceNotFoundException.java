@@ -3,18 +3,14 @@ package com.autorizador.api.exception;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.io.Serializable;
-
 @Getter
 @Setter
 public class ResourceNotFoundException extends RuntimeException {
 
-    private Serializable key;
+    private String messageCustom;
 
-    public ResourceNotFoundException(String message) { super(message); }
-
-    public ResourceNotFoundException(String message, Serializable key) {
+    public ResourceNotFoundException(String message, String messageCustom) {
         super(message);
-        this.key = key;
+        this.messageCustom = messageCustom;
     }
 }

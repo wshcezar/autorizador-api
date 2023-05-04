@@ -21,4 +21,11 @@ public class CartaoMapper {
                 .senha(entity.getSenha())
                 .build();
     }
+
+    public CartaoResponse toFindCartaoResponse(final CartaoEntity entity) {
+        return CartaoResponse.builder()
+                .numeroCartao(entity.getNumeroCartao())
+                .saldo(entity.getSaldo())
+                .build();
+    }
 }

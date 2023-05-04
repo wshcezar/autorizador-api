@@ -15,8 +15,11 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.math.BigDecimal;
+
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -54,9 +57,9 @@ public class CartaoControllerTest {
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$").exists())
                 .andExpect(jsonPath("numeroCartao").isNotEmpty())
-                .andExpect(jsonPath("numeroCartao").value(request.getNumeroCartao()))
+                .andExpect(jsonPath("numeroCartao").value(response.getNumeroCartao()))
                 .andExpect(jsonPath("senha").isNotEmpty())
-                .andExpect(jsonPath("senha").value(request.getSenha()))
+                .andExpect(jsonPath("senha").value(response.getSenha()))
                 .andReturn();
 
         verify(service).create(request);
@@ -84,5 +87,28 @@ public class CartaoControllerTest {
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(status().isBadRequest())
                 .andReturn();
+    }
+
+    @Test
+    public void deveRetornarSucessoQuandoConsultarOCartao() throws Exception {
+
+        final String numeroCartao = "123456789";
+        final String url = ENDPOINT + "/" + numeroCartao;
+
+        CartaoResponse response = CartaoResponse.builder().numeroCartao("123456789").saldo(BigDecimal.valueOf(500.0)).build();
+
+        when(service.findByNumeroCartao(numeroCartao)).thenReturn(response);
+
+        mockMvc.perform(get(url)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").exists())
+                .andExpect(jsonPath("numeroCartao").isNotEmpty())
+                .andExpect(jsonPath("numeroCartao").value(response.getNumeroCartao()))
+                .andExpect(jsonPath("saldo").isNotEmpty())
+                .andExpect(jsonPath("saldo").value(response.getSaldo()))
+                .andReturn();
+
+        verify(service).findByNumeroCartao(numeroCartao);
     }
 }

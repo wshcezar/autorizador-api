@@ -13,7 +13,12 @@ public class CartaoController implements CartaoEndpoint {
 
     private final CartaoService service;
     @Override
-    public CartaoResponse create(CartaoRequest request) {
+    public CartaoResponse create(final CartaoRequest request) {
         return service.create(request);
+    }
+
+    @Override
+    public CartaoResponse findByNumeroCartao(final String numeroCartao) {
+        return service.findByNumeroCartao(numeroCartao);
     }
 }
